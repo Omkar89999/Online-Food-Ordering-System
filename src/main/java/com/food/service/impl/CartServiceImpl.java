@@ -15,14 +15,13 @@ public class CartServiceImpl implements CartService {
 
 	@Autowired
 	private CartRepo cartRepo;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@Override
 	public CartDto createCart(CartDto cartDto) {
-		
-		
+
 		return null;
 	}
 
@@ -47,8 +46,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public void deleteCart(Long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
- 

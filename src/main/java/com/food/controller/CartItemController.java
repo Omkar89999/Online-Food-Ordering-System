@@ -18,10 +18,11 @@ public class CartItemController {
 
 	@Autowired
 	private CartItemService cartItemService;
+
 	@PostMapping("/addCart")
-	public ResponseEntity<CartItemDto> addCartItem(@RequestBody CartItemDto cartItemDto){
-		
+	public ResponseEntity<CartItemDto> addCartItem(@RequestBody CartItemDto cartItemDto) {
+
 		CartItem cartItem = cartItemService.createCartItem(cartItemDto);
-		return new ResponseEntity(cartItem,HttpStatus.CREATED);
+		return new ResponseEntity(cartItem, HttpStatus.CREATED);
 	}
 }
