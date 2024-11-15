@@ -64,13 +64,15 @@ public class CartItemServiceImpl implements CartItemService {
 
 	@Override
 	public CartItemDto getCartItemById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+
+		CartItem cartItem = cartItemRepo.findById(id).orElseThrow();
+		return modelMapper.map(cartItem, CartItemDto.class);
 	}
 
 	@Override
 	public void deleteCartItem(Long id) {
-		// TODO Auto-generated method stub
+		CartItem cartItem = cartItemRepo.findById(id).orElseThrow();
+		this.cartItemRepo.delete(cartItem);
 
 	}
 
