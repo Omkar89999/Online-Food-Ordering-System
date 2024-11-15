@@ -21,18 +21,15 @@ public class CartItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	 @ManyToOne(fetch = FetchType.LAZY)  
-	  @JoinColumn(name = "cart_id", nullable = false)  
-	    private UserCart cart;
-	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cart_id", nullable = false)
+	private UserCart cart;
+
 	private String menuItem;
-	
+
 	private long quantity;
-	
-	private double price; 
-	
-	
-	
+
+	private double price;
 
 }
