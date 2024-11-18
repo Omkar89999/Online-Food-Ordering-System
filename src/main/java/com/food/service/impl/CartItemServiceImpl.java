@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.food.dto.CartItemDto;
 import com.food.entity.CartItem;
 import com.food.repo.CartItemRepo;
-import com.food.repo.CartRepo;
 import com.food.service.CartItemService;
 
 @Service
@@ -19,9 +18,6 @@ public class CartItemServiceImpl implements CartItemService {
 
 	@Autowired
 	private CartItemRepo cartItemRepo;
-
-	@Autowired
-	private CartRepo cartRepo;
 
 	@Autowired
 	private ModelMapper modelMapper;

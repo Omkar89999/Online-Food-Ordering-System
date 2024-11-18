@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -73,19 +71,7 @@ public class JwtTokenHelper {
 		return expiration.before(new Date());
 	}
 
-	// generate token for user
-//	public String generateToken(Authentication authentication) {
-//		final Map<String, Object> claims = new HashMap<>();
-//		final UserDetails user = (UserDetails) authentication.getPrincipal();
-//
-//		final List<String> roles = authentication.getAuthorities()
-//				.stream()
-//				.map(GrantedAuthority::getAuthority)
-//				.collect(Collectors.toList());
-//
-//		claims.put(ROLES, roles);
-//		return generateToken(claims, user.getUsername());
-//	}
+	
 	
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims=new HashMap<>();

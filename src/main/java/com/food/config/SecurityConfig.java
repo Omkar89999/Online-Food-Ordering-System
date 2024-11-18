@@ -38,10 +38,7 @@ public class SecurityConfig {
 	public static final String[] PUBLIC_URLS = {
 
 			"/online/food/auth/register",
-			"/online/food/auth/login",
-			"/online/food/cartItem/**",
-			"/online/food/restaurant/**",
-			"/online/food/menuItem/**"
+			"/online/food/auth/login"
 	};
 
 	@Bean
@@ -54,7 +51,7 @@ public class SecurityConfig {
 		.authorizeHttpRequests()
 		.requestMatchers(PUBLIC_URLS).permitAll()
 		.requestMatchers(HttpMethod.GET).permitAll()
-		.requestMatchers(HttpMethod.POST).permitAll()
+//		.requestMatchers(HttpMethod.POST).permitAll()
 		.anyRequest()
 		.authenticated()
 		.and()
@@ -65,22 +62,7 @@ public class SecurityConfig {
 		
 		http.addFilterBefore(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class);
 
-		// 		.csrf()
-		// 		.disable()
-		// 		.authorizeHttpRequests()
-		// 		.requestMatchers(PUBLIC_URLS).permitAll()
-		// 		.requestMatchers(HttpMethod.GET).permitAll()
-		// 		.requestMatchers(HttpMethod.POST).permitAll()
-		// 		.anyRequest()
-		// 		.authenticated()
-		// 		.and()
-		// 		.exceptionHandling().authenticationEntryPoint(this.jwtAuthenticationEntryPoint)
-		// 		.and()
-		// 		.sessionManagement()
-		// 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-		// http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-		return http.build();
+				return http.build();
 
 	}
 
