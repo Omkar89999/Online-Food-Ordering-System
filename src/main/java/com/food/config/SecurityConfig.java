@@ -25,14 +25,13 @@ import com.food.security.JwtAuthenticationFilter;
 @EnableMethodSecurity
 @EnableWebMvc
 public class SecurityConfig {
-	
+
 	@Autowired
 	private CustomeUserDetailsService customeUserDetailsService;
-	
+
 	@Autowired
 	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-	
-	
+
 	@Autowired
 	private JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -40,13 +39,16 @@ public class SecurityConfig {
 
 			"/online/food/auth/register",
 			"/online/food/auth/login",
-			"/online/food/cartItem/**"
+			"/online/food/cartItem/**",
+			"/online/food/restaurant/**",
+			"/online/food/menuItem/**"
 	};
 
 	@Bean
-	public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception{
-		
+	public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
+
 		http
+<<<<<<< HEAD
 		.csrf()
 		.disable()
 		.authorizeHttpRequests()
@@ -62,26 +64,43 @@ public class SecurityConfig {
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.addFilterBefore(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class);
+=======
+				.csrf()
+				.disable()
+				.authorizeHttpRequests()
+				.requestMatchers(PUBLIC_URLS).permitAll()
+				.requestMatchers(HttpMethod.GET).permitAll()
+				.requestMatchers(HttpMethod.POST).permitAll()
+				.anyRequest()
+				.authenticated()
+				.and()
+				.exceptionHandling().authenticationEntryPoint(this.jwtAuthenticationEntryPoint)
+				.and()
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+>>>>>>> 6224aa44497ec1224458aa5914966a9f01c30f9d
 		return http.build();
-	
+
 	}
-	
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
 		auth.setUserDetailsService(customeUserDetailsService);
 		auth.setPasswordEncoder(passwordEncoder());
-		
+
 		return auth;
 	}
+
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-	    return config.getAuthenticationManager();
+		return config.getAuthenticationManager();
 	}
 
-	
 }

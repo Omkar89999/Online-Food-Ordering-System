@@ -1,7 +1,6 @@
 package com.food.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -9,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.food.dto.CartItemDto;
-import com.food.dto.UserDto;
-import com.food.entity.UserCart;
 import com.food.entity.CartItem;
-import com.food.entity.User;
+import com.food.entity.UserCart;
 import com.food.repo.CartItemRepo;
 import com.food.repo.CartRepo;
 import com.food.service.CartItemService;
