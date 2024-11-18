@@ -5,13 +5,16 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.food.dto.CartDto;
+import com.food.dto.CartItemDto;
 
 @Service
 public interface CartService {
 
-	CartDto createCart(CartDto cartDto);
+//	CartDto createCart(CartDto cartDto);
 
-	CartDto updateCart(CartDto cartDto, Long id);
+	CartDto createOrUpdateCart(int userId);
+//	CartDto updateCart(CartDto cartDto, Long id);
+	CartItemDto addItemToCart(int cartId, int menuItemId, int quantity);
 
 	List<CartDto> getAllCart();
 

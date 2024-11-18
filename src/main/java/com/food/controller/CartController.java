@@ -23,20 +23,28 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
-	@PostMapping("/addCart")
-	public ResponseEntity<CartDto> addCartItem(@RequestBody CartDto cartDto){
-		
-		CartDto cart = cartService.createCart(cartDto);
-		
-		return new ResponseEntity<CartDto>(cart,HttpStatus.CREATED);
-	}
+	// Endpoint to create or update a cart for a specific user
+    @PostMapping("/user/{userId}")
+    public ResponseEntity<CartDto>createOrUpdateCart(@PathVariable int userId) {
+    	
+    	CartDto cart = cartService.createOrUpdateCart(userId);
+        return new ResponseEntity<CartDto>(cart,HttpStatus.CREATED);
+    }
 	
-	@PutMapping("/updateCart/{id}")
-	public ResponseEntity<CartDto> updateCart(@RequestBody CartDto cartDto, @PathVariable Long id){
-		
-		CartDto updatedCart = this.cartService.updateCart(cartDto, id);
-		return new ResponseEntity<CartDto>(updatedCart,HttpStatus.OK);
-	}
+//	@PostMapping("/addCart")
+//	public ResponseEntity<CartDto> addCartItem(@RequestBody CartDto cartDto){
+//		
+//		CartDto cart = cartService.createCart(cartDto);
+//		
+//		return new ResponseEntity<CartDto>(cart,HttpStatus.CREATED);
+//	}
+	
+//	@PutMapping("/updateCart/{id}")
+//	public ResponseEntity<CartDto> updateCart(@RequestBody CartDto cartDto, @PathVariable Long id){
+//		
+//		CartDto updatedCart = this.cartService.updateCart(cartDto, id);
+//		return new ResponseEntity<CartDto>(updatedCart,HttpStatus.OK);
+//	}
 	
 	@GetMapping("/getCart/{id}")
 	public ResponseEntity<CartDto>getCartById(@PathVariable Long id){
