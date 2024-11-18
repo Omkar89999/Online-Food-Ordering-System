@@ -48,7 +48,7 @@ public class SecurityConfig {
 	public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
 
 		http
-<<<<<<< HEAD
+
 		.csrf()
 		.disable()
 		.authorizeHttpRequests()
@@ -64,23 +64,22 @@ public class SecurityConfig {
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.addFilterBefore(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class);
-=======
-				.csrf()
-				.disable()
-				.authorizeHttpRequests()
-				.requestMatchers(PUBLIC_URLS).permitAll()
-				.requestMatchers(HttpMethod.GET).permitAll()
-				.requestMatchers(HttpMethod.POST).permitAll()
-				.anyRequest()
-				.authenticated()
-				.and()
-				.exceptionHandling().authenticationEntryPoint(this.jwtAuthenticationEntryPoint)
-				.and()
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
->>>>>>> 6224aa44497ec1224458aa5914966a9f01c30f9d
+		// 		.csrf()
+		// 		.disable()
+		// 		.authorizeHttpRequests()
+		// 		.requestMatchers(PUBLIC_URLS).permitAll()
+		// 		.requestMatchers(HttpMethod.GET).permitAll()
+		// 		.requestMatchers(HttpMethod.POST).permitAll()
+		// 		.anyRequest()
+		// 		.authenticated()
+		// 		.and()
+		// 		.exceptionHandling().authenticationEntryPoint(this.jwtAuthenticationEntryPoint)
+		// 		.and()
+		// 		.sessionManagement()
+		// 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+		// http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 
 	}

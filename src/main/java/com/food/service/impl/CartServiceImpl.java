@@ -25,7 +25,7 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-<<<<<<< HEAD
+
 	@Autowired
 	private UserRepo userRepo;
 
@@ -77,13 +77,7 @@ public class CartServiceImpl implements CartService {
 //		UserCart updatedCart = cartRepo.save(cart);
 //		return this.modelMapper.map(updatedCart, CartDto.class);
 //	}
-=======
-	@Override
-	public CartDto createCart(CartDto cartDto) {
 
-		return null;
-	}
->>>>>>> 6224aa44497ec1224458aa5914966a9f01c30f9d
 
 
 	@Override
@@ -103,13 +97,12 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public void deleteCart(Long id) {
-<<<<<<< HEAD
+
 		UserCart cart = cartRepo.findById(id).orElseThrow();
 		this.cartRepo.delete(cart);
-=======
-		// TODO Auto-generated method stub
 
->>>>>>> 6224aa44497ec1224458aa5914966a9f01c30f9d
+		
+
 	}
 
 }
