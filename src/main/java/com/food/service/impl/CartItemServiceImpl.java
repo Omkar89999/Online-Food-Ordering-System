@@ -1,6 +1,7 @@
 package com.food.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.food.dto.CartItemDto;
 import com.food.entity.CartItem;
-import com.food.entity.UserCart;
 import com.food.repo.CartItemRepo;
 import com.food.repo.CartRepo;
 import com.food.service.CartItemService;
@@ -27,50 +27,43 @@ public class CartItemServiceImpl implements CartItemService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public CartItem createCartItem(CartItemDto cartItemDto) {
-
-		CartItem cartItem = this.modelMapper.map(cartItemDto, CartItem.class);
-		UserCart cart = this.cartRepo.findById(cartItemDto.getCart()).orElseThrow();
-
-		cartItem.setCart(cart);
-		CartItem saveCartItem = cartItemRepo.save(cartItem);
-
-		return saveCartItem;
+	public CartItemDto addCartItem(CartItemDto cartItemDto) {
+		CartItem cartItem = modelMapper.map(cartItemDto, CartItem.class);
+        CartItem savedCartItem = cartItemRepo.save(cartItem);
+        return modelMapper.map(savedCartItem, CartItemDto.class);
 	}
 
 	@Override
-	public CartItemDto updateCartItem(CartItemDto cartItemDto, Long id) {
-		CartItem cartItem = this.cartItemRepo.findById(id).orElseThrow();
-		cartItem.setCart(cartItemDto.getCart());
-		cartItem.setMenuItem(cartItemDto.getMenuItem());
-		cartItem.setQuantity(cartItemDto.getQuantity());
-		cartItem.setPrice(cartItemDto.getPrice());
-		CartItem updatedItem = cartItemRepo.save(cartItem);
-
-		return this.modelMapper.map(updatedItem, CartItemDto.class);
+	public List<CartItemDto> getCartItemsByCartId(long cartId) {
+		 List<CartItem> cartItems = cartItemRepo.findByCartId(cartId);
+	        return cartItems.stream()
+	                .map(cartItem -> modelMapper.map(cartItem, CartItemDto.class))
+	                .collect(Collectors.toList());
 	}
 
 	@Override
-	public List<CartItemDto> getAllCartItem() {
-		List<CartItem> allCartItem = this.cartItemRepo.findAll();
-
-		return allCartItem.stream().map(cartItem -> this.modelMapper.map(cartItem, CartItemDto.class))
-				.collect(Collectors.toList());
-
+	public Optional<CartItemDto> getCartItemById(long id) {
+		Optional<CartItem> cartItem = cartItemRepo.findById(id);
+        return cartItem.map(item -> modelMapper.map(item, CartItemDto.class));
 	}
 
 	@Override
-	public CartItemDto getCartItemById(Long id) {
-
-		CartItem cartItem = cartItemRepo.findById(id).orElseThrow();
-		return modelMapper.map(cartItem, CartItemDto.class);
+	public CartItemDto updateCartItemQuantity(long id, long quantity) {
+		CartItem cartItem = cartItemRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("CartItem not found"));
+        cartItem.setQuantity(quantity);
+        // Update the price if necessary
+        cartItem.setPrice(cartItem.getPrice() * quantity);
+        CartItem updatedCartItem = cartItemRepo.save(cartItem);
+        return modelMapper.map(updatedCartItem, CartItemDto.class);
 	}
 
 	@Override
-	public void deleteCartItem(Long id) {
-		CartItem cartItem = cartItemRepo.findById(id).orElseThrow();
-		this.cartItemRepo.delete(cartItem);
-
+	public void removeCartItem(long id) {
+		cartItemRepo.deleteById(id);
+		
 	}
+	
+	
 
 }

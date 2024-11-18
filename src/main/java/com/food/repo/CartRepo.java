@@ -12,4 +12,5 @@ public interface CartRepo extends JpaRepository<UserCart, Long> {
 
 	Optional<UserCart> findById(UserCart id);
 	Optional<UserCart> findByUserId(long userId);
+	  
 }

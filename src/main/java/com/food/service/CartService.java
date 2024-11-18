@@ -1,7 +1,5 @@
 package com.food.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.food.dto.CartDto;
@@ -10,16 +8,20 @@ import com.food.dto.CartItemDto;
 @Service
 public interface CartService {
 
-//	CartDto createCart(CartDto cartDto);
 
-	CartDto createOrUpdateCart(int userId);
-//	CartDto updateCart(CartDto cartDto, Long id);
-	CartItemDto addItemToCart(int cartId, int menuItemId, int quantity);
+	CartDto createOrUpdateCart(long userId);
 
-	List<CartDto> getAllCart();
+	CartItemDto addItemToCart(long cartId, long menuItemId, long quantity);
+	
+	double calculatePrice(long menuItemId, long quantity);
+	
+	void removeItemFromCart(long cartItemId);
 
-	CartDto getCartById(Long id);
+	CartDto getCartByUserId(long userId);
+	
 
-	void deleteCart(Long id);
+	
+	
+	
 
 }

@@ -1,21 +1,18 @@
 package com.food.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.food.dto.CartItemDto;
-import com.food.entity.CartItem;
 
 public interface CartItemService {
 	
-	CartItem createCartItem(CartItemDto cartItemDto);
-	
-	CartItemDto updateCartItem(CartItemDto cartItemDto, Long id);
-	
-	List<CartItemDto> getAllCartItem();
-	
-	CartItemDto getCartItemById(Long id);
-	
-	void deleteCartItem(Long id);
+
+	CartItemDto addCartItem(CartItemDto cartItemDto);
+    List<CartItemDto> getCartItemsByCartId(long cartId);
+    Optional<CartItemDto> getCartItemById(long id);
+    CartItemDto updateCartItemQuantity(long id, long quantity);
+    void removeCartItem(long id);
 	
 
 }
