@@ -1,37 +1,44 @@
-// package com.food.entity;
+package com.food.entity;
 
-// import java.time.LocalDateTime;
-// import java.util.List;
+import java.time.LocalDateTime;
+import java.util.List;
 
-// import jakarta.persistence.Column;
-// import jakarta.persistence.Entity;
-// import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
-// import jakarta.persistence.Id;
-// import jakarta.persistence.OneToMany;
-// import jakarta.persistence.Table;
-// import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-// @Data
-// @Entity
-// @Table(name = "order")
-// public class Order {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Data;
 
-// @Id
-// @GeneratedValue(strategy = GenerationType.IDENTITY)
-// private Long id;
+@Data
+@Entity
+@Table(name = "orders")
+public class Order {
 
-// @OneToMany(mappedBy = "order")
-// private List<String> orderItems;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-// private long userId;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User userId;
 
-// @Column(name = "orderStatus", nullable = false)
-// private String orderStatus;
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems;
 
-// @Column(name = "orderPrice", nullable = false)
-// private double orderPrice;
+    @Column(name = "orderStatus", nullable = false)
+    private String orderStatus;
 
-// @Column(name = "orderDateTime", nullable = false)
-// private LocalDateTime dateTime;
-// }
+    @Column(name = "orderPrice", nullable = false)
+    private double orderPrice;
+
+    @Column(name = "orderDateTime", nullable = false)
+    private LocalDateTime dateTime;
+}
