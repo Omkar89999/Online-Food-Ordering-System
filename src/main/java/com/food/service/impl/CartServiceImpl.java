@@ -30,7 +30,6 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	private MenuItemRepo menuItemRepo;
 
-
 	// create or update cart
 	@Override
 	public CartDto createOrUpdateCart(long userId) {
@@ -38,42 +37,40 @@ public class CartServiceImpl implements CartService {
 		UserCart createCart = cartRepo.save(cart);
 		return this.modelMapper.map(createCart, CartDto.class);
 	}
-	
+
 	@Override
 	public CartItemDto addItemToCart(long cartId, long menuItemId, long quantity) {
-	    // Fetch the existing cart by cartId or throw an exception if not found
-	    UserCart cart = cartRepo.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found"));
+		// Fetch the existing cart by cartId or throw an exception if not found
+		UserCart cart = cartRepo.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found"));
 
-	    // Create CartItemDto and set properties manually
-	    CartItemDto cartItemDto = new CartItemDto();
-	    cartItemDto.setCart(cartId);  // Cart is already fetched, no need to save cart again
-	    cartItemDto.setMenuItem(menuItemId);
-	    cartItemDto.setQuantity(quantity);
-	    cartItemDto.setPrice(calculatePrice(menuItemId, quantity)); // Calculate price for the item
+		// Create CartItemDto and set properties manually
+		CartItemDto cartItemDto = new CartItemDto();
+		cartItemDto.setCart(cartId); // Cart is already fetched, no need to save cart again
+		cartItemDto.setMenuItem(menuItemId);
+		cartItemDto.setQuantity(quantity);
+		cartItemDto.setPrice(calculatePrice(menuItemId, quantity)); // Calculate price for the item
 
-	    // Map CartItemDto to CartItem and save it
-	    CartItem cartItem = modelMapper.map(cartItemDto, CartItem.class);
-	    cartItem.setCart(cart);  // Ensure the CartItem references the correct cart
-	    cartItemRepo.save(cartItem);
+		// Map CartItemDto to CartItem and save it
+		CartItem cartItem = modelMapper.map(cartItemDto, CartItem.class);
+		cartItem.setCart(cart); // Ensure the CartItem references the correct cart
+		cartItemRepo.save(cartItem);
 
-	    // Update the total price of the cart
-	    updateCartTotalPrice(cartId);
+		// Update the total price of the cart
+		updateCartTotalPrice(cartId);
 
-	    return cartItemDto; // Return CartItemDto or map it to CartDto as needed
+		return cartItemDto; // Return CartItemDto or map it to CartDto as needed
 	}
-
 
 	@Override
 	public double calculatePrice(long menuItemId, long quantity) {
-	    Optional<MenuItem> menuItemOptional = menuItemRepo.findById(menuItemId);
-	    if (menuItemOptional.isEmpty()) {
-	        throw new IllegalArgumentException("Menu item not found with id: " + menuItemId);
-	    }
-	    MenuItem menuItem = menuItemOptional.get();
-	    double unitPrice = menuItem.getPrice(); // Assuming MenuItem has a price field
-	    return unitPrice * quantity;
+		Optional<MenuItem> menuItemOptional = menuItemRepo.findById(menuItemId);
+		if (menuItemOptional.isEmpty()) {
+			throw new IllegalArgumentException("Menu item not found with id: " + menuItemId);
+		}
+		MenuItem menuItem = menuItemOptional.get();
+		double unitPrice = menuItem.getPrice(); // Assuming MenuItem has a price field
+		return unitPrice * quantity;
 	}
-
 
 	private void updateCartTotalPrice(long cartId) {
 		// Fetch the cart by its ID
@@ -102,13 +99,12 @@ public class CartServiceImpl implements CartService {
 		// Update the total price of the cart
 		updateCartTotalPrice(cartId);
 	}
-	
+
 	@Override
 	public CartDto getCartByUserId(long userId) {
-	    UserCart cart = cartRepo.findByUserId(userId)
-	        .orElseThrow(() -> new RuntimeException("Cart not found for user ID: " + userId));
-	    return this.modelMapper.map(cart, CartDto.class);
+		UserCart cart = cartRepo.findByUserId(userId)
+				.orElseThrow(() -> new RuntimeException("Cart not found for user ID: " + userId));
+		return this.modelMapper.map(cart, CartDto.class);
 	}
-
 
 }
