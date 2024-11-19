@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.food.dto.UserDto;
 import com.food.service.UserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/online/food")
+@Tag(name = "User Controller", description = "GET methods of User APIs")
 public class UserController {
 
 	// url pattern

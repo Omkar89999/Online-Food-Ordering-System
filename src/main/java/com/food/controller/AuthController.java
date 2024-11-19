@@ -19,8 +19,11 @@ import com.food.security.JwtAuthResponse;
 import com.food.security.JwtTokenHelper;
 import com.food.service.UserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/online/food/auth")
+@Tag(name="Auth Controller",description = "for authentication purpose")
 public class AuthController {
 
 	@Autowired

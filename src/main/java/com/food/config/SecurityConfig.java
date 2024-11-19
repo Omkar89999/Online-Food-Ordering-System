@@ -36,21 +36,24 @@ public class SecurityConfig {
 	private JwtAuthenticationFilter jwtAuthenticationFilter;
 
 	public static final String[] PUBLIC_URLS = {
+		    "/online/food/auth/register",
+		    "/online/food/auth/login",
+		    "/v3/api-docs/**",
+		    "/swagger-ui/**",
+		    "/swagger-ui.html",
+		    "/swagger-resources/**",
+		    "/webjars/**"
+		};
 
-			"/online/food/auth/register",
-			"/online/food/auth/login"
-	};
 
 	@Bean
 	public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
 
 		http
-
 		.csrf()
 		.disable()
 		.authorizeHttpRequests()
 		.requestMatchers(PUBLIC_URLS).permitAll()
-		.requestMatchers(HttpMethod.GET).permitAll()
 //		.requestMatchers(HttpMethod.POST).permitAll()
 		.anyRequest()
 		.authenticated()
