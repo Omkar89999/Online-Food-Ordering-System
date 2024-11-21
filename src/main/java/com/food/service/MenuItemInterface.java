@@ -14,4 +14,6 @@ public interface MenuItemInterface {
     public MenuItem updateMenuItem(MenuItemDto menuItemDto, long id);
 
     public String deleteById(long id);
+
+    public List<MenuItem> findMenuItemsByName(String name);
 }

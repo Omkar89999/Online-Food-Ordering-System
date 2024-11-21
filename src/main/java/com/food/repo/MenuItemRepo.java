@@ -9,4 +9,6 @@ import com.food.entity.MenuItem;
 public interface MenuItemRepo extends JpaRepository<MenuItem, Long> {
 
     List<MenuItem> findByRestaurantId(Long restaurant);
+
+    List<MenuItem> findByNameContainingIgnoreCase(String name);
 }

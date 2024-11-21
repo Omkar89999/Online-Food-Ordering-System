@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.food.dto.MenuItemDto;
@@ -41,5 +42,10 @@ public class MenuItemController {
     @DeleteMapping("deletemenuitem/{id}")
     public String deleteMenuItemById(@PathVariable long id) {
         return menuItemService.deleteById(id);
+    }
+
+    @GetMapping("getMenuByName")
+    public List<MenuItem> menuByName(@RequestParam String name) {
+        return menuItemService.findMenuItemsByName(name);
     }
 }

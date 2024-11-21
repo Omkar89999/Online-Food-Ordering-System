@@ -68,4 +68,11 @@ public class MenuItemService implements MenuItemInterface {
         }
         return "Resturant not found";
     }
+
+    @Override
+    public List<MenuItem> findMenuItemsByName(String name) {
+        // Searching for menu items by name (case-insensitive)
+        return menuItemRepo.findByNameContainingIgnoreCase(name);
+    }
+
 }

@@ -1,11 +1,16 @@
 package com.food.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,14 +36,20 @@ public class Restaurant {
     @Column(name = "Description", nullable = true)
     private String description;
 
-    @Column(name = "Rating", nullable = true)
-    private String rating;
+    @Column(name = "Rating", nullable = false)
+    private Float rating;
 
-    public Restaurant(String description, Location location, String rating, String restaurantName) {
+    @JsonBackReference
+    @OneToMany(mappedBy = "restaurant")
+    private List<MenuItem> menuItems;
+
+    public Restaurant(String description, Location location, Float rating, String restaurantName,
+            List<MenuItem> menuItems) {
         this.description = description;
         this.location = location;
         this.rating = rating;
         this.restaurantName = restaurantName;
+        this.menuItems = menuItems;
     }
 
 }

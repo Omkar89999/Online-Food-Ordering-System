@@ -1,5 +1,6 @@
 package com.food.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -58,5 +59,15 @@ public class RestaurantService implements ResturantInterface {
             return "Deleted Succesfully";
         }
         return "Resturant not found";
+    }
+
+    @Override
+    public List<Restaurant> getRestaurantsByLocation(String city) {
+        return restaurantRepo.findByLocationCityContainingIgnoreCase(city);
+    }
+
+    @Override
+    public List<Restaurant> getRestaurantsByRating(double minRating) {
+        return restaurantRepo.findByRatingGreaterThanEqual(minRating);
     }
 }

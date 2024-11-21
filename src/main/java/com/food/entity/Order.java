@@ -1,18 +1,18 @@
 package com.food.entity;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -25,20 +25,27 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User userId;
+    @JoinColumn(name = "user_id") // Foreign key column referring to User's ID
+    private User userId; // This is the association to the User entity
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems;
+    @ManyToMany
+    @JoinTable(name = "order_menu_item", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "menu_item_id"))
+    private List<MenuItem> menuItems;
 
-    @Column(name = "orderStatus", nullable = false)
-    private String orderStatus;
+    @Column
+    private Double totalPrice;
 
-    @Column(name = "orderPrice", nullable = false)
-    private double orderPrice;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private OrderStatus status;
 
-    @Column(name = "orderDateTime", nullable = false)
-    private LocalDateTime dateTime;
+    @Column
+    private String deliveryAddress;
+
+    @Column
+    private String paymentMethod;
+
+    @Column
+    private String orderDate;
 }
